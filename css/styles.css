@@ -182,6 +182,7 @@ body.dark{
   color: var(--color-taskfont);
   position: relative;
   padding-left: 40px;
+  
 }
 
 /* circulo check */
@@ -194,7 +195,13 @@ body.dark{
   height: 20px;
   border-radius: 50%;
   border: 1px solid #a0a0b0;
+
+}
+
+.checkbox:checked + .task-label {
   background-color:var(--color-taskbg);
+  text-decoration: line-through;
+  color: #b3b3b3;
 }
 
 .checkbox:checked + .task-label::before {
@@ -211,10 +218,10 @@ body.dark{
   height: 16px;
 }
 
-.completed {
+/* .completed {
   text-decoration: line-through;
   color: #b3b3b3; 
-}
+} */
 
 /* Footer */
 .list-footer {
