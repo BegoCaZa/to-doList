@@ -28,8 +28,11 @@ darkMode = false;
 
 //FUNCIONES
 
+const filterTask = () => {};
+
 const clearCompleted = () => {
-  todoListElement.textContent = allTasks.filter(task => !task.completed);
+  allTasks = allTasks.filter(task => !task.completed);
+  insertTasks();
 };
 
 const updateItemsLeft = () => {
@@ -142,4 +145,4 @@ modeChangeElement.addEventListener('click', changeTheme);
 clearCompletedButton.addEventListener('click', clearCompleted);
 
 // // filtersElement.addEventListener('click', event => {
-// // });
+// // }); DELEGACION DE EVENTOS
