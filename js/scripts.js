@@ -22,13 +22,28 @@ const deleteButtonElement = document.getElementById('delete-button');
 const modeChangeElement = document.getElementById('mode-button');
 const clearCompletedButton = document.getElementById('clear-completed');
 const itemsLeftElement = document.getElementById('items-left');
+const filtersElement = document.getElementById('filters');
 
 let allTasks = [];
 darkMode = false;
 
 //FUNCIONES
 
-const filterTask = () => {};
+const filterTask = event => {
+
+  if(event.target.textContent === 'All') {
+    todoListElement= allTasks;
+  } else if(event.target.textContent === 'Completed') {
+    let completedTasks = allTasks[completed];
+    todoListElement= completedTasks;
+  } else if(event.target.textContent === 'Active') {
+    let activeTasks = allTasks[!completed];
+    todoListElement= activeTasks;
+   }
+  console.log(event.target);
+  console.log(completedTasks);
+
+};
 
 const clearCompleted = () => {
   allTasks = allTasks.filter(task => !task.completed);
@@ -122,6 +137,8 @@ const insertTasks = () => {
   });
 
   console.log(allTasks);
+  return allTasks;
+ 
 };
 
 const createTask = event => {
@@ -143,6 +160,6 @@ const createTask = event => {
 formElement.addEventListener('submit', createTask);
 modeChangeElement.addEventListener('click', changeTheme);
 clearCompletedButton.addEventListener('click', clearCompleted);
-
+filtersElement.addEventListener('click', filterTask);
 // // filtersElement.addEventListener('click', event => {
 // // }); DELEGACION DE EVENTOS
