@@ -29,21 +29,40 @@ darkMode = false;
 
 //FUNCIONES
 
-const filterTask = event => {
+const changeFilter = event => {//puedo usar el mismo evento que los filtros?
 
-  if(event.target.textContent === 'All') {
-    todoListElement= allTasks;
-  } else if(event.target.textContent === 'Completed') {
-    let completedTasks = allTasks[completed];
-    todoListElement= completedTasks;
-  } else if(event.target.textContent === 'Active') {
-    let activeTasks = allTasks[!completed];
-    todoListElement= activeTasks;
-   }
-  console.log(event.target);
-  console.log(completedTasks);
+  const allFilters = document.querySelectorAll('.filter');
 
+  if (event.target.classList.contains('filter')) { //si se hizo click en alguno de los botones del filtro
+    if (event.target.classList.contains('active')) {
+      // si tiene active, bye
+      event.target.classList.remove('active');
+    } else {
+      allFilters.forEach(filter => {
+        filter.classList.add('active');
+      });
+    }
+  }
 };
+
+// const filterTask = event => {
+//   const allTasks = insertTasks();
+//   const completedTasks = allTasks.filter(task => task.completed);
+//   const activeTasks = allTasks.filter(task => !task.completed);
+
+//   if(event.target.textContent === 'All') {
+//     todoListElement= allTasks;
+//   } else if(event.target.textContent === 'Completed') {
+//     let completedTasks = allTasks[completed];
+//     todoListElement= completedTasks;
+//   } else if(event.target.textContent === 'Active') {
+//     let activeTasks = allTasks[!completed];
+//     todoListElement= activeTasks;
+//    }
+//   console.log(event.target);
+//   console.log(completedTasks);
+
+// };
 
 const clearCompleted = () => {
   allTasks = allTasks.filter(task => !task.completed);
@@ -160,6 +179,8 @@ const createTask = event => {
 formElement.addEventListener('submit', createTask);
 modeChangeElement.addEventListener('click', changeTheme);
 clearCompletedButton.addEventListener('click', clearCompleted);
-filtersElement.addEventListener('click', filterTask);
+// filtersElement.addEventListener('click', filterTask);
+filtersElement.addEventListener('click', changeFilter);
+
 // // filtersElement.addEventListener('click', event => {
 // // }); DELEGACION DE EVENTOS

@@ -259,7 +259,7 @@ body.dark{
   cursor: pointer;
 }
 
-.filter--active {
+.active{
   color: var(--color-filterActived);
   font-weight: bold;
 }
