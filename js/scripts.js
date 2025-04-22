@@ -29,44 +29,9 @@ darkMode = false;
 
 //FUNCIONES
 
-const changeFilter = event => {//puedo usar el mismo evento que los filtros?
-
-  const allFilters = document.querySelectorAll('.filter');
-
-  if (event.target.classList.contains('filter')) { //si se hizo click en alguno de los botones del filtro
-    if (event.target.classList.contains('active')) {
-      // si tiene active, bye
-      event.target.classList.remove('active');
-    } else {
-      allFilters.forEach(filter => {
-        filter.classList.add('active');
-      });
-    }
-  }
-};
-
-// const filterTask = event => {
-//   const allTasks = insertTasks();
-//   const completedTasks = allTasks.filter(task => task.completed);
-//   const activeTasks = allTasks.filter(task => !task.completed);
-
-//   if(event.target.textContent === 'All') {
-//     todoListElement= allTasks;
-//   } else if(event.target.textContent === 'Completed') {
-//     let completedTasks = allTasks[completed];
-//     todoListElement= completedTasks;
-//   } else if(event.target.textContent === 'Active') {
-//     let activeTasks = allTasks[!completed];
-//     todoListElement= activeTasks;
-//    }
-//   console.log(event.target);
-//   console.log(completedTasks);
-
-// };
-
 const clearCompleted = () => {
   allTasks = allTasks.filter(task => !task.completed);
-  insertTasks();
+  insertTasks(allTasks);
 };
 
 const updateItemsLeft = () => {
@@ -94,23 +59,23 @@ const completeTask = id => {
     }
     return task;
   });
-  insertTasks();
+  insertTasks(allTasks);
 
   console.log(allTasks);
 };
 
 const deleteTask = id => {
   allTasks = allTasks.filter(task => task.id !== id);
-  insertTasks();
+  insertTasks(allTasks);
   //filtra las tareas y devuelte todas las que NO sea donde hice click. Vuelve a ìntar el array actualizado
 };
 
-const insertTasks = () => {
+const insertTasks = task => {
   todoListElement.textContent = ''; //la lista empieza vacia que sino mete todas las tareas otra vez al hacer un task
   inputElement.value = ''; //limpio el input al añadir una tarea
 
   //creo las cosas del task por partes
-  allTasks.forEach(task => {
+  task.forEach(task => {
     //yo ya meti en el array una tarea, ahora la recorro
 
     //el contenedor
@@ -157,7 +122,18 @@ const insertTasks = () => {
 
   console.log(allTasks);
   return allTasks;
- 
+};
+
+const filterTasks = () => {
+  let tasksToRender = allTasks;
+
+  if (filter === 'completed') {
+    tasksToRender = allTasks.filter(task => task.completed);
+  } else if (filter === 'active') {
+    tasksToRender = allTasks.filter(task => !task.completed);
+  }
+
+  insertTasks(tasksToRender); //recibe solo las que quiere filtrar
 };
 
 const createTask = event => {
@@ -173,13 +149,30 @@ const createTask = event => {
     name: inputElement.value, //se lo asigna el input
     completed: false //por defecto la tarea no esta completada
   });
-  insertTasks();
+  // insertTasks(allTasks);
+  filterTasks();
 };
+
+const changeFilter = event => {
+  //es importante empezar considerando los filtros; esto filtrara las task que luego se insertaran
+  const filter = event.target.dataset.filter; //traigo el data del html y lo meto en una variable que evaluaré
+  if (!filter) return; //si no hay filter, omite (siempre tendra por que por defaul esta all en el html)
+
+  filtersElement
+    .querySelector('.filter-active')
+    .classList.remove('filter-active');
+
+  event.target.classList.add('filter-active');
+
+  filterTasks();
+};
+
+filterTasks();
 
 formElement.addEventListener('submit', createTask);
 modeChangeElement.addEventListener('click', changeTheme);
 clearCompletedButton.addEventListener('click', clearCompleted);
-// filtersElement.addEventListener('click', filterTask);
+// filtersElement.addEventListener('click', filterTasks);
 filtersElement.addEventListener('click', changeFilter);
 
 // // filtersElement.addEventListener('click', event => {
