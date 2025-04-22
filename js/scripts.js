@@ -52,23 +52,6 @@ const changeTheme = () => {
   }
 };
 
-const completeTask = id => {
-  allTasks.map(task => {
-    if (task.id === id) {
-      task.completed = !task.completed; //cambio el estado de la tarea
-    }
-    return task;
-  });
-  insertTasks(allTasks);
-
-  console.log(allTasks);
-};
-
-const deleteTask = id => {
-  allTasks = allTasks.filter(task => task.id !== id);
-  insertTasks(allTasks);
-  //filtra las tareas y devuelte todas las que NO sea donde hice click. Vuelve a ìntar el array actualizado
-};
 
 const insertTasks = task => {
   todoListElement.textContent = ''; //la lista empieza vacia que sino mete todas las tareas otra vez al hacer un task
@@ -125,6 +108,7 @@ const insertTasks = task => {
 };
 
 const filterTasks = () => {
+  const filter = filtersElement.querySelector('.filter-active').dataset.filter; //traigo el data del html y lo meto en una variable que evaluaré
   let tasksToRender = allTasks;
 
   if (filter === 'completed') {
@@ -134,6 +118,24 @@ const filterTasks = () => {
   }
 
   insertTasks(tasksToRender); //recibe solo las que quiere filtrar
+};
+
+const deleteTask = id => {
+  allTasks = allTasks.filter(task => task.id !== id);
+  filterTasks(); //vuelvo a filtrar las tareas para que se vean los cambios
+  //filtra las tareas y devuelte todas las que NO sea donde hice click. Vuelve a ìntar el array actualizado
+};
+
+const completeTask = id => {
+  allTasks.map(task => {
+    if (task.id === id) {
+      task.completed = !task.completed; //cambio el estado de la tarea
+    }
+    return task;
+  });
+  filterTasks(); //vuelvo a filtrar las tareas para que se vean los cambios
+
+  console.log(allTasks);
 };
 
 const createTask = event => {
