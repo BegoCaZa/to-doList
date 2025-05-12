@@ -86,7 +86,6 @@ body.dark{
 .header-title {
   font-size: 28px;
   margin: 0;
-  
 }
 
 .mode-button {
@@ -101,8 +100,6 @@ body.dark{
   justify-content: space-between;
   align-items: center;
   gap: 100px;
-
-
 }
 
 
@@ -114,7 +111,6 @@ body.dark{
   display: flex;
   flex-direction: column;
   width: 80%;
-  
 }
 
 /* Input Styles */
